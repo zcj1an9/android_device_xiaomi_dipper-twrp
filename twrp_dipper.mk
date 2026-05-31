@@ -24,7 +24,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
 # Inherit device makefile
-$(call inherit-product, device/xiaomi/dipper/device.mk)
+$(call inherit-product, device/xiaomi/perseus/device.mk)
 
 # Inherit from twrp common
 $(call inherit-product, vendor/twrp/config/common.mk)
@@ -33,13 +33,13 @@ $(call inherit-product, vendor/twrp/config/common.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 
 # Inherit any OrangeFox-specific settings
-$(call inherit-product-if-exists, device/xiaomi/dipper/fox_dipper.mk)
+$(call inherit-product-if-exists, device/xiaomi/perseus/fox_perseus.mk)
 
-PRODUCT_RELEASE_NAME := dipper
+PRODUCT_RELEASE_NAME := perseus
 
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := $(PRODUCT_RELEASE_NAME)
 PRODUCT_NAME := twrp_$(PRODUCT_RELEASE_NAME)
 PRODUCT_BRAND := Xiaomi
 PRODUCT_MANUFACTURER := $(PRODUCT_BRAND)
-PRODUCT_MODEL := Mi 8
+PRODUCT_MODEL := Mi Mix 3
