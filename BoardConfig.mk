@@ -71,6 +71,9 @@ ifeq ($(FOX_USE_DYNAMIC_PARTITIONS),1)
   BOARD_KERNEL_CMDLINE += androidboot.super_partition=system
 endif
 
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.gz-dtb
+BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
+BOARD_INCLUDE_RECOVERY_DTBO := true
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 BOARD_KERNEL_PAGESIZE := 4096
@@ -78,25 +81,6 @@ BOARD_KERNEL_TAGS_OFFSET := 0x00000100
 BOARD_RAMDISK_OFFSET     := 0x01000000
 BOARD_BOOT_HEADER_VERSION := 1
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
-
-# kernel paths
-KERNEL_PATH := $(DEVICE_PATH)/prebuilt
-
-# whether to do an inline build of the kernel sources
-#FOX_BUILD_FULL_KERNEL_SOURCES := 1
-ifeq ($(FOX_BUILD_FULL_KERNEL_SOURCES),1)
-    TARGET_KERNEL_SOURCE := kernel/xiaomi/$(TARGET_DEVICE)
-    TARGET_KERNEL_CONFIG := $(TARGET_DEVICE)-fox_defconfig
-    TARGET_KERNEL_CLANG_COMPILE := true
-    KERNEL_SUPPORTS_LLVM_TOOLS := true
-    TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-gnu-
-    # clang-r383902 = 11.0.1; clang-r416183b = 12.0.5; clang-r416183b1 = 12.0.7;
-    # clang_13.0.0 (proton-clang 13.0.0, symlinked into prebuilts/clang/host/linux-x86/clang_13.0.0)
-    TARGET_KERNEL_CLANG_VERSION := 13.0.0
-    TARGET_KERNEL_CLANG_PATH := $(shell pwd)/prebuilts/clang/host/linux-x86/clang-$(TARGET_KERNEL_CLANG_VERSION)
-else
-    TARGET_PREBUILT_KERNEL := $(KERNEL_PATH)/Image.gz-dtb
-endif
 
 # languages
 TW_EXTRA_LANGUAGES := true
@@ -157,7 +141,7 @@ BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
 TW_FRAMERATE := 120
 
 # FDE
-ifeq ($(FOX_ENABLE_DIPPER_FDE),true)
+ifeq ($(FOX_ENABLE_PERSEUS_FDE),true)
   TARGET_HW_DISK_ENCRYPTION := true
   BOARD_USES_QCOM_DECRYPTION := true
   TARGET_CRYPTFS_HW_PATH := $(QCOM_CRYPTFS_PATH)
